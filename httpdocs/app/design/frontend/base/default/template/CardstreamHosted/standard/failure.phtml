@@ -19,9 +19,9 @@
  */
 ?>
 <div class="page-title">
-    <h2 style="color:red;">Your payment has either been declined or has failed</h2>
+    <h2 style="color:red;"><?php echo $this->__('Your payment has either been declined or has failed') ?></h2>
 </div>
-<p>Declined/Failed transactions occur for various reasons, the most common being insufficient funds, incorrect card information, expired card or AVS/CV2 mismatch.</p>
-<p>In rare cases there may be a communication error or technical problem. If your card continues to be declined, please contact your bank before contacting us.</p>
-<p>Alternatively you may wish to use a alternative method of payment.</p>
-<p><a href="<?php echo Mage::getUrl('checkout/cart') ?>">Retry Payment</a>
+<p><?php echo $this->__('Declined/Failed transactions occur for various reasons, the most common being insufficient funds, incorrect card information, expired card or AVS/CV2 mismatch.') ?></p>
+<p><?php echo $this->__('In rare cases there may be a communication error or technical problem. If your card continues to be declined, please contact your bank before contacting us.') ?></p>
+<p><?php echo $this->__('Alternatively you may wish to use a alternative method of payment.') ?></p>
+<p><a href="<?php echo Mage::getUrl('checkout/cart') ?>"><?php echo $this->__('Retry Payment') ?></a>
