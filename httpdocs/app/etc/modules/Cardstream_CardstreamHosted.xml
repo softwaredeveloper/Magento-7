@@ -1,0 +1,8 @@
+<config>
+	<modules>
+		<Cardstream_CardstreamHosted>
+			<active>true</active>
+			<codePool>community</codePool>
+		</Cardstream_CardstreamHosted>
+	</modules>
+</config>
