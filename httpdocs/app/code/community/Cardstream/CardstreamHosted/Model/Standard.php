@@ -252,7 +252,8 @@ class Cardstream_CardstreamHosted_Model_Standard extends Mage_Payment_Model_Meth
             "customerAddress" => $customerAddress,
             "customerPostCode" => $billingAddress->getPostcode(),
             "customerEmail" => $order->getCustomerEmail(),
-            "customerPhone" => $billingAddress->getTelephone()
+            "customerPhone" => $billingAddress->getTelephone(),
+	    "merchantData" => "magento-form-1.1",
         );
 
 
