@@ -38,8 +38,7 @@ Click on the Cardstream Hosted Form bar to expand the module options.
 | New Order Status | Choose the status that will be applied to new orders. |
 | CallbackURL | This is the web address to which the response will be posted. If you have installed Magento in the root web folder, the URL will take the form: http://YOURDOMAIN/index.php/CharityclearHosted/standard/success/
 If you have installed Magento in a sub-folder, the
-URL will take the form:
-http://YOURDOMAIN/SUB-FOLDER/index.php/CharityclearHosted/standard/success/
+URL will take the form: http://YOURDOMAIN/SUB-FOLDER/index.php/CharityclearHosted/standard/success/ |
 | Countries | You can choose to restrict payments from specific Countries. |
 
 magento-direct-module
