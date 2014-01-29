@@ -32,18 +32,11 @@ Click on the Cardstream Hosted Form bar to expand the module options.
 | Enabled | Choose ‘Yes’ to enable the Cardstream module. |
 | Title   | This is the title of the payment module, as seen by your customers. |
 | Merchant ID | Enter your merchant ID here, or 0000992 for test mode. |
-| Payment Action | Choose whether to take funds immediately, or whether to pre-authorise payment. (N.B. Please note that if Pre-Auth is chosen, you will need to collect funds via the CharityClear Merchant Management System – MMS). Version 1.0.1 for Magento 1.4.1.1 |
+| Merchant Shared Key | the pre sharted key set in your mms used to create payment signatures for each transaction |
 | Country Code | The 3 digit ISO country code for your location. Use 826 for the UK. |
 | Currency Code | The 3 digit ISO currency code. Use 826 for Pounds Sterling. |
+| Payment in process | select the status to set while payment is being processed |
 | New Order Status | Choose the status that will be applied to new orders. |
-| CallbackURL | This is the web address to which the response will be posted. If you have installed Magento in the root web folder, the URL will take the form: http://YOURDOMAIN/index.php/CharityclearHosted/standard/success/ If you have installed Magento in a sub-folder, the URL will take the form: http://YOURDOMAIN/SUB-FOLDER/index.php/CharityclearHosted/standard/success/ |
+| Failed order status | select the status that will be applied to failed orders |
 | Countries | You can choose to restrict payments from specific Countries. |
 
-magento-direct-module
-=====================
-
-the code for magento can be found in the branches of this project.
-
-for version Magento 1.7 and before see this link: https://github.com/CardStream/magento-direct-module/tree/Magento-1.7
-
-for version Magento 1.8 and higher see this link: https://github.com/CardStream/magento-direct-module/tree/Magento-1.8
