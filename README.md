@@ -36,9 +36,7 @@ Click on the Cardstream Hosted Form bar to expand the module options.
 | Country Code | The 3 digit ISO country code for your location. Use 826 for the UK. |
 | Currency Code | The 3 digit ISO currency code. Use 826 for Pounds Sterling. |
 | New Order Status | Choose the status that will be applied to new orders. |
-| CallbackURL | This is the web address to which the response will be posted. If you have installed Magento in the root web folder, the URL will take the form: http://YOURDOMAIN/index.php/CharityclearHosted/standard/success/
-If you have installed Magento in a sub-folder, the
-URL will take the form: http://YOURDOMAIN/SUB-FOLDER/index.php/CharityclearHosted/standard/success/ |
+| CallbackURL | This is the web address to which the response will be posted. If you have installed Magento in the root web folder, the URL will take the form: http://YOURDOMAIN/index.php/CharityclearHosted/standard/success/ If you have installed Magento in a sub-folder, the URL will take the form: http://YOURDOMAIN/SUB-FOLDER/index.php/CharityclearHosted/standard/success/ |
 | Countries | You can choose to restrict payments from specific Countries. |
 
 magento-direct-module
