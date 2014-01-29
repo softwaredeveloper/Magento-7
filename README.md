@@ -1,4 +1,4 @@
-**CharityClear Hosted Forms Module for Magento**
+**Cardstream Hosted Forms Module for Magento**
 
 **Installation Instructions**
 
