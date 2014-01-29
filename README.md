@@ -1,16 +1,32 @@
+**CharityClear Hosted Forms Module for Magento**
 
--> **CharityClear Hosted Forms Module for Magento** <-
+**Installation Instructions**
 
-Installation Instructions
-Step 1:
+**Step 1:**
+
 Copy the /app directory into your Magento directory. If you are asked if you
 want to replace any existing files, click Yes.
-Step 2:
+
+**Step 2:**
+
 Login to the Admin area of Magento. Click on System > Cache Management.
 Click on the button labelled ‘Flush Magento Cache’, located at the top right
 of the page.
 
 ![Magento Flush Cache](/images/magento-cache.png)
+
+**Step 3:**
+
+Click on System > Configuration then click on Payment Methods under the
+Sales heading on the left-hand side of the page. All installed payment
+methods will be displayed.
+
+**Step 4:**
+
+Click on the CharityClear Hosted Form bar to expand the module options.
+
+
+
 
 magento-direct-module
 =====================
