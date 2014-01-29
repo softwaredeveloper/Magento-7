@@ -1,5 +1,5 @@
 
-CharityClear Hosted Forms Module for Magento
+-> **CharityClear Hosted Forms Module for Magento** <-
 
 Installation Instructions
 Step 1:
