@@ -23,9 +23,9 @@ methods will be displayed.
 
 **Step 4:**
 
-Click on the CharityClear Hosted Form bar to expand the module options.
+Click on the Cardstream Hosted Form bar to expand the module options.
 
-
+![Magento Cardstream Config](/images/magento-cardstream-config.png)
 
 
 magento-direct-module
