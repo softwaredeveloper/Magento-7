@@ -1,3 +1,17 @@
+
+CharityClear Hosted Forms Module for Magento
+
+Installation Instructions
+Step 1:
+Copy the /app directory into your Magento directory. If you are asked if you
+want to replace any existing files, click Yes.
+Step 2:
+Login to the Admin area of Magento. Click on System > Cache Management.
+Click on the button labelled ‘Flush Magento Cache’, located at the top right
+of the page.
+
+![Magento Flush Cache](/images/magento-cache.png)
+
 magento-direct-module
 =====================
 
