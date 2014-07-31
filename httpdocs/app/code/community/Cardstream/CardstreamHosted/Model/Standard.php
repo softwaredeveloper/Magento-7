@@ -216,7 +216,7 @@ class Cardstream_CardstreamHosted_Model_Standard extends Mage_Payment_Model_Meth
         $customerName = rtrim( $customer->getFirstname() . " " . $customer->getLastname()  );
                 
         //Get the redirectURL
-        $redirectURL = Mage::getUrl("CardstreamHosted/standard/success/");
+        $redirectURL = Mage::getUrl("CardstreamHosted/standard/success/", array('_secure' => true));
         
         //Generate the transactionUnique value
         $transactionUnique = uniqid("", true) . uniqid("", true) . uniqid("", true);
