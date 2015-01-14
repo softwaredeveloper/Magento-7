@@ -1,5 +1,9 @@
 **Cardstream Hosted Forms Module for Magento**
 
+**Compatibility**
+
+Compatible with Magento Version 1.9.1.0 and before. 
+
 **Installation Instructions**
 
 **Step 1:**
@@ -31,7 +35,7 @@ Click on the Cardstream Hosted Form bar to expand the module options.
 | :-------------|:------------|
 | Enabled | Choose ‘Yes’ to enable the Cardstream module. |
 | Title   | This is the title of the payment module, as seen by your customers. |
-| Merchant ID | Enter your merchant ID here, or 0000992 for test mode. |
+| Merchant ID | Enter your merchant ID here, or 100001 for test mode. |
 | Merchant Shared Key | the pre sharted key set in your mms used to create payment signatures for each transaction |
 | Country Code | The 3 digit ISO country code for your location. Use 826 for the UK. |
 | Currency Code | The 3 digit ISO currency code. Use 826 for Pounds Sterling. |
