@@ -1,0 +1,67 @@
+<fieldset class="form-list">
+	<?php $_code=$this->getMethodCode(); ?>
+	<ul id="payment_form_<?php echo $_code ?>" style="display:none">
+		<?php
+			$model = $this->getMethod();
+			foreach($model->createGeneralRequest() as $key=>$value){
+				echo "<li><input type='hidden' name='payment[$key]' value='$value'/></li>";
+			}
+		?>
+		<li>
+			<label for="<?php echo $_code ?>_cc_name" class="required"><em>*</em><?php echo $this->__('Cardholder Name') ?></label>
+			<div class="input-box">
+				<input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Cardholder Name')) ?>" class="input-text required-entry" id="<?php echo $_code ?>_cc_name" placeholder="Cardholder Name" name="payment[cardstream_name]" value="" />
+			</div>
+		</li>
+		<li>
+			<label for="<?php echo $_code ?>_cc_address" class="required"><em>*</em><?php echo $this->__('Cardholder Address') ?></label>
+			<div class="input-box">
+				<input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Cardholder Address')) ?>" class="input-text required-entry" id="<?php echo $_code ?>_cc_address" placeholder="Cardholder Address" name="payment[cardstream_address]" value="" />
+			</div>
+		</li>
+		<li>
+			<label for="<?php echo $_code ?>_cc_postcode" class="required"><em>*</em><?php echo $this->__('Cardholder PostCode') ?></label>
+			<div class="input-box">
+				<input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Cardholder PostCode')) ?>" class="input-text required-entry" id="<?php echo $_code ?>_cc_postcode" placeholder="Cardholder PostCode" name="payment[cardstream_postcode]" value="" />
+			</div>
+		</li>
+		<li>
+			<label for="<?php echo $_code ?>_cc_phone" class="required"><em>*</em><?php echo $this->__('Cardholder Phone') ?></label>
+			<div class="input-box">
+				<input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Cardholder Phone')) ?>" class="input-text required-entry" id="<?php echo $_code ?>_cc_phone" placeholder="Cardholder Phone" name="payment[cardstream_phone]" value="" />
+			</div>
+		</li>
+		<li>
+			<label for="<?php echo $_code ?>_cc_email" class="required"><em>*</em><?php echo $this->__('Cardholder Email') ?></label>
+			<div class="input-box">
+				<input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Cardholder Email')) ?>" class="input-text required-entry" id="<?php echo $_code ?>_cc_email" placeholder="Cardholder Email" name="payment[cardstream_email]" value="" />
+			</div>
+		</li>
+	 	<li>
+			<label for="<?php echo $_code ?>_cardstream_number" class="required"><em>*</em><?php echo $this->__('Card Number') ?></label>
+			<div class="input-box">
+				<input type="text" id="<?php echo $_code ?>_cardstream_number" name="payment[cardstream_number]" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Card Number')) ?>" class="input-text validate-cc-number validate-cc-type required-entry" placeholder="Card Number" value="" />
+			</div>
+		</li>
+		<li>
+			<label class="required" for="ccsave_expiration"><em>*</em>Expiration Date</label>
+			<div class="input-box">
+				<div class="v-fix">
+					<input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Card Month exp')) ?>" class="input-text cvv required-entry" id="cssave_expiration" name="payment[cardstream_expiry_month]" placeholder="Month" maxlength="2" value="" />
+				</div>
+				<input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Card Exp Year')) ?>" class="input-text cvv required-entry" id="<?php echo $_code ?>_cardstream_cid" name="payment[cardstream_expiry_year]" maxlength="2" placeholder="Year" value="" />
+			</div>
+		</li>
+	<li>
+		<label for="<?php echo $_code ?>_cardstream_cid" class="required"><em>*</em><?php echo $this->__('Card Verification Number') ?></label>
+		<div class="input-box">
+			<div class="v-fix">
+				<input type="password" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Card Verification Number')) ?>" class="input-text cvv required-entry validate-cc-cvn" id="<?php echo $_code ?>_cardstream_cid" name="payment[cardstream_strip_code]" maxlength="4" placeholder="CSV" value="" />
+			</div>
+			<a href="#" class="cvv-what-is-this"><?php echo $this->__('What is this?') ?></a>
+			<br/>
+			<?php echo $this->getMethod()->getConfigData('message');?>
+		</div>
+	</li>
+	</ul>
+</fieldset>

@@ -1,0 +1,8 @@
+<config>
+	<modules>
+		<Cardstream_PaymentGateway>
+			<active>true</active>
+			<codePool>community</codePool>
+		</Cardstream_PaymentGateway>
+	</modules>
+</config>
