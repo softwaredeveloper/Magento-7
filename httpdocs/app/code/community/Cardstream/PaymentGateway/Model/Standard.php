@@ -210,7 +210,7 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
      * @return Array (payment form data)
      */
     public function createDirectRequest() {
-        $session = $this->getCoreSession();
+	$session = $this->getCoreSession();
         $req = array_merge(
             $this->createGeneralRequest(),
             array_filter(array(
@@ -220,11 +220,17 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
                 "cardExpiryMonth"    => $session->getCardstreamExpiryMonth(),
                 "cardExpiryYear"     => $session->getCardstreamExpiryYear(),
                 "cardCVV"            => $session->getCardstreamStripCode(),
-                "threeDSMD"          => (isset($_REQUEST['MD']) ? $_REQUEST['MD'] : null),
+                "customerName"       => $session->getCardstreamName(),
+           	"customerAddress"    => $session->getCardstreamAddress(),
+            	"customerPostCode"   => $session->getCardstreamPostcode(),
+            	"customerEmail"      => $session->getCardstreamEmail(),
+            	"customerPhone"      => $session->getCardstreamPhone(),
+		"threeDSMD"          => (isset($_REQUEST['MD']) ? $_REQUEST['MD'] : null),
                 "threeDSPaRes"       => (isset($_REQUEST['PaRes']) ? $_REQUEST['PaRes'] : null),
                 "threeDSPaReq"       => (isset($_REQUEST['PaReq']) ? $_REQUEST['PaReq'] : null)
             ))
-        );
+     	);
+	
         return $req;
     }
     public function retrieveSpecificKeys($array, $keys){
@@ -255,12 +261,12 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
         if ($sig === $this->createSignature($data, $this->secret)) {
             if ($data['responseCode'] == 65802) {
                 //3D Secure process must complete
-                $pageUrl = ($this->isSecure() ? HTTP_SERVER : HTTPS_SERVER) . $_SERVER["REQUEST_URI"];
+                $pageUrl = ($this->isSecure() ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'] . $_SERVER["REQUEST_URI"];
                 die("
                     <script>document.onreadystatechange = function() { document.getElementById('3ds').submit(); }</script>
-                    <form id='3ds' action=\"" . htmlentities($this->res['threeDSACSURL']) . "\" method=\"post\">
-                        <input type=\"hidden\" name=\"MD\" value=\"" . htmlentities($this->res['threeDSMD']) . "\">
-                        <input type=\"hidden\" name=\"PaReq\" value=\"" . htmlentities($this->res['threeDSPaReq']) . "\">
+                    <form id='3ds' action=\"" . htmlentities($data['threeDSACSURL']) . "\" method=\"post\">
+                        <input type=\"hidden\" name=\"MD\" value=\"" . htmlentities($data['threeDSMD']) . "\">
+                        <input type=\"hidden\" name=\"PaReq\" value=\"" . htmlentities($data['threeDSPaReq']) . "\">
                         <input type=\"hidden\" name=\"TermUrl\" value=\"" . htmlentities($pageUrl) . "\">
                     </form>
                 ");

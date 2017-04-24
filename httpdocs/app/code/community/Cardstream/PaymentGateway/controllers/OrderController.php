@@ -43,7 +43,9 @@ class Cardstream_PaymentGateway_OrderController extends Mage_Core_Controller_Fro
 	public function isGET() {
 		return $_SERVER['REQUEST_METHOD'] == 'GET';
 	}
-
+	public function isValid3DSResponse() {
+		return isset($_POST['MD']) && (isset($_POST['PaRes']) || isset($_POST['PaReq']));
+	}
 	public function processAction() {
 		if(
 			$this->instance->method == 'Hosted' &&
@@ -62,27 +64,30 @@ class Cardstream_PaymentGateway_OrderController extends Mage_Core_Controller_Fro
 			$this->instance->processAll($_POST);
 		} else if (
 			$this->instance->method == 'Direct' &&
-			$this->isValidRequest() &&
-			$this->isGET()
-		) {
+			($this->isValidRequest() && $this->isGET()) || 
+			($this->isValid3DSResponse() && $this->isPOST())
+		){
 			//Try to process a direct payment
-			$template = $this->instance->createDirectRequest();
-			//Rebuild the data by merging the template of a direct request to retrieve only the saved form data during checkout
-			$req = array_merge(
-				$template,
-				$this->instance->retrieveSpecificKeys(
-					$this->session->getData(),
-					array_keys($template)
-				)
-			);
-			//Create the signature at the end, preventing any signature slips when gettings submitted through the client
-			$req['signature'] = $this->instance->createSignature($req, $this->instance->secret);
-			//Process the quest using curl
-			$res = $this->instance->makeRequest(MODULE_PAYMENT_CARDSTREAM_DIRECT_URL, $req);
-			//echo "<pre>" . var_export($req, true) . "</pre><br/><pre>" . var_export($res, true) . "</pre>";
-			$this->instance->processAll($res);
-		} else {
-			$this->instance->clearData();
+                        $req = $this->instance->createDirectRequest();
+                        //Rebuild some data by getting from the session
+			$req['transactionUnique'] = null;
+			//Rebuild from our session as some values will get lost otherwise
+			$build = array('transactionUnique', 'amount', 'orderRef', 'remoteAddress');
+			foreach($build as $i=>$var){
+				$req[$var] = $this->session->getData()[$var];
+			}
+                        //Create the signature at the end, preventing any signature slips when gettings submitted through the client
+                        $req['signature'] = $this->instance->createSignature($req, $this->instance->secret);
+                        //Process the quest using curl
+                        $res = $this->instance->makeRequest(MODULE_PAYMENT_CARDSTREAM_DIRECT_URL, $req);
+                        //echo "<pre>" . var_export($req, true) . "</pre><br/><pre>" . var_export($res, true) . "</pre>";
+                        $this->instance->processAll($res);
+		} else if (
+			$this->instance->method == 'Direct' &&
+			$this->isValid3DSResponse() &&
+			$this->isPOST()
+		) {
+			//$this->instance->processAll($_POST);
 		}
 	}
 }
