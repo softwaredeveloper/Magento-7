@@ -183,9 +183,13 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
             "customerAddress"   => $address,
             "customerPostCode"  => $billingAddress->getPostcode(),
             "customerEmail"     => $billingAddress->getEmail(),
-            "customerPhone"     => $billingAddress->getTelephone(),
-	    "remoteAddress"	=> $_SERVER['REMOTE_ADDR']
+            "remoteAddress" 	=> $_SERVER['REMOTE_ADDR']
         );
+
+        if(!is_null($billingAddress->getTelephone())) {
+            $req["customerPhone"] = $billingAddress->getTelephone();
+        }
+
         return $req;
     }
     /**
@@ -221,15 +225,18 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
                 "cardExpiryYear"     => $session->getCardstreamExpiryYear(),
                 "cardCVV"            => $session->getCardstreamStripCode(),
                 "customerName"       => $session->getCardstreamName(),
-           	"customerAddress"    => $session->getCardstreamAddress(),
+             	"customerAddress"    => $session->getCardstreamAddress(),
             	"customerPostCode"   => $session->getCardstreamPostcode(),
             	"customerEmail"      => $session->getCardstreamEmail(),
-            	"customerPhone"      => $session->getCardstreamPhone(),
-		"threeDSMD"          => (isset($_REQUEST['MD']) ? $_REQUEST['MD'] : null),
+        		"threeDSMD"          => (isset($_REQUEST['MD']) ? $_REQUEST['MD'] : null),
                 "threeDSPaRes"       => (isset($_REQUEST['PaRes']) ? $_REQUEST['PaRes'] : null),
                 "threeDSPaReq"       => (isset($_REQUEST['PaReq']) ? $_REQUEST['PaReq'] : null)
             ))
      	);
+
+        if(!is_null($session->getCardstreamPhone())) {
+            $req["customerPhone"] = $session->getCardstreamPhone();
+        }
 	
         return $req;
     }
