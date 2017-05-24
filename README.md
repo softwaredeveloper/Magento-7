@@ -4,6 +4,8 @@
 
 Compatible with Magento Version 1.9.1.0 and before. 
 
+Tested with Magento v1.9.2.2 and PHP v5.3.1
+
 **Installation Instructions**
 
 **Step 1:**

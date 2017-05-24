@@ -19,15 +19,16 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
     protected $_canSaveCc               = false;
     protected $_isInitializeNeeded      = true;
     public $method, $session;
+
     public function __construct(){
         $this->method = $this->getConfigData('IntegrationMethod');
         $this->_formBlockType = "PaymentGateway/{$this->method}Form";
         $this->_infoBlockType = "PaymentGateway/{$this->method}Form";
         $this->countryCode = $this->getConfigData('CountryCode');
         $this->currencyCode = $this->getConfigData('CurrencyCode');
-        $this->secret = $this->getConfigData('MerchantSharedKey');
+        $this->secret = trim($this->getConfigData('MerchantSharedKey'));
         $this->merchantID = $this->getConfigData('MerchantID');
-        $this->responsive = "N"; //TODO: Add responsive option
+        $this->responsive = "Y"; //TODO: Add responsive option
         $this->session = $this->getCoreSession();
 
         if(!$this->isSecure() && $this->method == 'Direct') {
@@ -163,7 +164,8 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
      */
     public function createGeneralRequest(){
         $quote = $this->getQuote();
-        $amount = $quote->getTotals()['grand_total']->getValue() * 100;
+        $totals = $quote->getTotals();
+        $amount = $totals['grand_total']->getValue() * 100;
         $ref = $quote->getUpdatedAt() . " - " . $quote->getId();
         $billingAddress = $quote->getBillingAddress();
         //Create a formatted address
@@ -206,7 +208,6 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
                 "formResponsive"    => $this->responsive
             )
         );
-        $req['signature'] = $this->createSignature($req, $this->secret);
         return $req;
     }
     /**
@@ -237,7 +238,7 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
         if(!is_null($session->getCardstreamPhone())) {
             $req["customerPhone"] = $session->getCardstreamPhone();
         }
-	
+
         return $req;
     }
     public function retrieveSpecificKeys($array, $keys){
@@ -255,6 +256,7 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
         echo "<form id='redirect' action='" . MODULE_PAYMENT_CARDSTREAM_FORM_URL . "' method='POST'>";
         //Get session stored keys for a hosted request
         $data = $this->retrieveSpecificKeys($this->session->getData(), array_keys($this->createHostedRequest()));
+        $data['signature'] = $this->createSignature($data, $this->secret);
         foreach ($data as $key => $value) {
             echo "<input type='hidden' name='$key' value='$value'/>";
         }
