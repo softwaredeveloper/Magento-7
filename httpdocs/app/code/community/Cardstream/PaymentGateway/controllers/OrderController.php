@@ -82,12 +82,6 @@ class Cardstream_PaymentGateway_OrderController extends Mage_Core_Controller_Fro
             //Process the quest using curl
             $res = $this->instance->makeRequest(MODULE_PAYMENT_CARDSTREAM_DIRECT_URL, $req);
             $this->instance->processAll($res);
-		} else if (
-			$this->instance->method == 'Direct' &&
-			$this->isValid3DSResponse() &&
-			$this->isPOST()
-		) {
-			//$this->instance->processAll($_POST);
 		}
 	}
 }

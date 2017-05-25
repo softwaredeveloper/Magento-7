@@ -169,10 +169,10 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
         $ref = $quote->getUpdatedAt() . " - " . $quote->getId();
         $billingAddress = $quote->getBillingAddress();
         //Create a formatted address
-        $address = ($billingAddress->getStreet(1) ? $billingAddress->getStreet(1) . ", \n" : '');
-        $address .= ($billingAddress->getStreet(2) ? $billingAddress->getStreet(2) . ", \n" : '');
-        $address .= ($billingAddress->getCity() ? $billingAddress->getCity() . ", \n" : '');
-        $address .= ($billingAddress->getRegion() ? $billingAddress->getRegion() . ", \n" : '');
+        $address = ($billingAddress->getStreet(1) ? $billingAddress->getStreet(1) . ",\n" : '');
+        $address .= ($billingAddress->getStreet(2) ? $billingAddress->getStreet(2) . ",\n" : '');
+        $address .= ($billingAddress->getCity() ? $billingAddress->getCity() . ",\n" : '');
+        $address .= ($billingAddress->getRegion() ? $billingAddress->getRegion() . ",\n" : '');
         $address .= ($billingAddress->getCountry() ? $billingAddress->getCountry() : '');
         $req = array(
             "merchantID"        => $this->merchantID,
@@ -215,28 +215,28 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
      * @return Array (payment form data)
      */
     public function createDirectRequest() {
-	$session = $this->getCoreSession();
+	   $session = $this->getCoreSession()->getData();
+
         $req = array_merge(
             $this->createGeneralRequest(),
             array_filter(array(
                 "action"             => "SALE",
                 "type"               => 1,
-                "cardNumber"         => $session->getCardstreamNumber(),
-                "cardExpiryMonth"    => $session->getCardstreamExpiryMonth(),
-                "cardExpiryYear"     => $session->getCardstreamExpiryYear(),
-                "cardCVV"            => $session->getCardstreamStripCode(),
-                "customerName"       => $session->getCardstreamName(),
-             	"customerAddress"    => $session->getCardstreamAddress(),
-            	"customerPostCode"   => $session->getCardstreamPostcode(),
-            	"customerEmail"      => $session->getCardstreamEmail(),
+                "cardNumber"         => $session['cardNumber'],
+                "cardExpiryMonth"    => $session['cardExpiryMonth'],
+                "cardExpiryYear"     => $session['cardExpiryYear'],
+                "cardCVV"            => $session['cardStripCode'],
+                "customerName"       => $session['customerName'],
+             	"customerAddress"    => $session['customerAddress'],
+            	"customerPostCode"   => $session['customerPostCode'],
+            	"customerEmail"      => $session['customerEmail'],
         		"threeDSMD"          => (isset($_REQUEST['MD']) ? $_REQUEST['MD'] : null),
                 "threeDSPaRes"       => (isset($_REQUEST['PaRes']) ? $_REQUEST['PaRes'] : null),
                 "threeDSPaReq"       => (isset($_REQUEST['PaReq']) ? $_REQUEST['PaReq'] : null)
             ))
      	);
-
-        if(!is_null($session->getCardstreamPhone())) {
-            $req["customerPhone"] = $session->getCardstreamPhone();
+        if(!is_null($session['customerPhone'])) {
+            $req["customerPhone"] = $session['customerPhone'];
         }
 
         return $req;
@@ -352,20 +352,28 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
                             $this->buildStatus($data),
                             0
                         );
+                        $payment = $order->getPayment();
+                        $payment
+                        ->setCardstreamTransactionUnique($data['transactionUnique'])
+                        ->setCardstreamOrderRef($data['orderRef'])
+                        ->setCardstreamXref($data['xref'])
+                        ->setCardstreamResponseMessage($data['responseMessage'])
+                        ->save();
+                        try {
+                            $order->cancel();
+                        } catch (Exception $e){
+                            Mage::Log($e);
+                        }
                         $order->save();
                         try {
                             $order->delete();
                         } catch (Exception $e) {
-                            /*
-                             * This will most likely be deleted because the callback
-                             * did this. However it could be that we just can't
-                             * delete it. However, it will have the unsuccessful
-                             * status anyhow
-                             */
+                            //Admins and admin areas can only delete failed orders
                         }
                     }
                     $this->clearData();
                     $quote->setIsActive(true)->save();
+                    $this->getCheckout()->setQuoteId($quoteId);
                     $error = sprintf(MODULE_PAYMENT_CARDSTREAM_RESPONSE_ERROR, htmlentities($data['responseMessage']));
                     $this->session->addError($error);
                     Mage::app()->getResponse()->setRedirect(Mage::getUrl("checkout/cart"));
