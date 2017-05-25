@@ -169,10 +169,10 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
         $ref = $quote->getUpdatedAt() . " - " . $quote->getId();
         $billingAddress = $quote->getBillingAddress();
         //Create a formatted address
-        $address = ($billingAddress->getStreet(1) ? $billingAddress->getStreet(1) . "\n" : '');
-        $address .= ($billingAddress->getStreet(2) ? $billingAddress->getStreet(2) . "\n" : '');
-        $address .= ($billingAddress->getCity() ? $billingAddress->getCity() . "\n" : '');
-        $address .= ($billingAddress->getRegion() ? $billingAddress->getRegion() . "\n" : '');
+        $address = ($billingAddress->getStreet(1) ? $billingAddress->getStreet(1) . ", \n" : '');
+        $address .= ($billingAddress->getStreet(2) ? $billingAddress->getStreet(2) . ", \n" : '');
+        $address .= ($billingAddress->getCity() ? $billingAddress->getCity() . ", \n" : '');
+        $address .= ($billingAddress->getRegion() ? $billingAddress->getRegion() . ", \n" : '');
         $address .= ($billingAddress->getCountry() ? $billingAddress->getCountry() : '');
         $req = array(
             "merchantID"        => $this->merchantID,
