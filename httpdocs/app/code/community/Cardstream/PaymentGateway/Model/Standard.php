@@ -185,7 +185,7 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
             "customerAddress"   => $address,
             "customerPostCode"  => $billingAddress->getPostcode(),
             "customerEmail"     => $billingAddress->getEmail(),
-            "remoteAddress" 	=> $_SERVER['REMOTE_ADDR']
+            "remoteAddress"     => $_SERVER['REMOTE_ADDR']
         );
 
         if(!is_null($billingAddress->getTelephone())) {
@@ -215,7 +215,7 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
      * @return Array (payment form data)
      */
     public function createDirectRequest() {
-	   $session = $this->getCoreSession()->getData();
+       $session = $this->getCoreSession()->getData();
 
         $req = array_merge(
             $this->createGeneralRequest(),
@@ -227,14 +227,14 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
                 "cardExpiryYear"     => $session['cardExpiryYear'],
                 "cardCVV"            => $session['cardStripCode'],
                 "customerName"       => $session['customerName'],
-             	"customerAddress"    => $session['customerAddress'],
-            	"customerPostCode"   => $session['customerPostCode'],
-            	"customerEmail"      => $session['customerEmail'],
-        		"threeDSMD"          => (isset($_REQUEST['MD']) ? $_REQUEST['MD'] : null),
+                "customerAddress"    => $session['customerAddress'],
+                "customerPostCode"   => $session['customerPostCode'],
+                "customerEmail"      => $session['customerEmail'],
+                "threeDSMD"          => (isset($_REQUEST['MD']) ? $_REQUEST['MD'] : null),
                 "threeDSPaRes"       => (isset($_REQUEST['PaRes']) ? $_REQUEST['PaRes'] : null),
                 "threeDSPaReq"       => (isset($_REQUEST['PaReq']) ? $_REQUEST['PaReq'] : null)
             ))
-     	);
+        );
         if(!is_null($session['customerPhone'])) {
             $req["customerPhone"] = $session['customerPhone'];
         }
@@ -309,28 +309,17 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
                         ->setCardstreamAmountReceived($data['amountReceived'])
                         ->save();
                         //Create invoice if we can
-                        if ($order->canInvoice) {
-                            $converter = Mage::getModel('sales/convert_order');
-                            $invoice = $converter->toInvoice($order);
-
-                            foreach($order->getAllItems() as $orderItem) {
-
-                                if(!$orderItem->getQtyToInvoice()) {
-                                    continue;
-                                }
-
-                                $item = $converter->itemToInvoiceItem($orderItem);
-                                $item->setQty($orderItem->getQtyToInvoice());
-                                $invoice->addItem($item);
+                        if ($order->canInvoice()) {
+                            $invoice = Mage::getModel('sales/service_order', $order)->prepareInvoice();
+                            if ($invoice->getTotalQty()) {
+                                $invoice->setRequestedCaptureCase(Mage_Sales_Model_Order_Invoice::CAPTURE_ONLINE);
+                                $invoice->register();
+                                $transactionSave = Mage::getModel('core/resource_transaction')
+                                    ->addObject($invoice)
+                                    ->addObject($invoice->getOrder());
+                                $transactionSave->save();
+                                $invoice->save();
                             }
-
-                            $invoice->collectTotals();
-                            $invoice->register()->capture();
-                            $CommentData = "Invoice " . $invoice->getIncrementId() . " was created";
-                            Mage::getModel('core/resource_transaction')
-                            ->addObject($invoice)
-                            ->addObject($invoice->getOrder())
-                            ->save();
                         }
                         $order->setStatus($status);
                         $order->addStatusToHistory(
@@ -509,7 +498,7 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
      * @return Cardstream_PaymentGateway_Model_Standard  The current instance
      */
     public function onInvoiceCreate(Mage_Sales_Model_Invoice_Payment $payment) {
-		return $this;
+        return $this;
     }
     /**
      * Redirect URL to go to after placing an order (GET only...)
