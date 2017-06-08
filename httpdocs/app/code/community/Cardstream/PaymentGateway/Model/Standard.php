@@ -23,7 +23,7 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
     public function __construct(){
         $this->method = $this->getConfigData('IntegrationMethod');
         $this->_formBlockType = "PaymentGateway/{$this->method}Form";
-        $this->_infoBlockType = "PaymentGateway/{$this->method}Form";
+        //$this->_infoBlockType = "PaymentGateway/{$this->method}Form";
         $this->countryCode = $this->getConfigData('CountryCode');
         $this->currencyCode = $this->getConfigData('CurrencyCode');
         $this->secret = trim($this->getConfigData('MerchantSharedKey'));
