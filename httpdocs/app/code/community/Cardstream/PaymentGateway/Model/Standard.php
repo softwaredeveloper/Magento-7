@@ -309,6 +309,12 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
                         ->setCardstreamAmountReceived($data['amountReceived'])
                         ->save();
                         //Create invoice if we can
+                        $order->setStatus($status);
+                        $order->addStatusToHistory(
+                            $status,
+                            $this->buildStatus($data),
+                            0
+                        );
                         if ($order->canInvoice()) {
                             $invoice = Mage::getModel('sales/service_order', $order)->prepareInvoice();
                             if ($invoice->getTotalQty()) {
@@ -318,16 +324,15 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
                                     ->addObject($invoice)
                                     ->addObject($invoice->getOrder());
                                 $transactionSave->save();
+                                $order->sendNewOrderEmail();
+                                $invoice->sendEmail();
                                 $invoice->save();
+                            } else {
+                                $order->sendNewOrderEmail();
                             }
+                        } else {
+                            $order->sendNewOrderEmail();
                         }
-                        $order->setStatus($status);
-                        $order->addStatusToHistory(
-                            $status,
-                            $this->buildStatus($data),
-                            0
-                        );
-                        $order->sendNewOrderEmail();
                         $order->save();
                     }
                     $this->clearData();
