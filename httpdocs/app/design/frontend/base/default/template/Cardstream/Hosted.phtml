@@ -3,10 +3,12 @@
 	<ul id="payment_form_<?php echo $_code ?>" style="display:none">
 	<?php
 		$model = $this->getMethod();
-		foreach($model->createHostedRequest() as $key=>$value){
-			echo "<li><input type='hidden' name='payment[$key]' value='$value'/></li>";
-		}
+		$model->startOrderCapture();
+		// foreach($model->createHostedRequest() as $key=>$value){
+		// 	echo "<li><input type='hidden' name='payment[$key]' value='$value'/></li>";
+		// }
 	?>
+	<li><input type='hidden' name='submit' value='1'/></li>
 	<li>We will ask for your payment details after you place your order</li>
 	</ul>
 </fieldset>

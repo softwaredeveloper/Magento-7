@@ -66,6 +66,7 @@
 				<model>Cardstream_PaymentGateway_Model_Standard</model>
 				<title>Cardstream Payment Gateway</title>
 				<message>Pay with Cardstream</message>
+				<debug>0</debug>
 			</PaymentGateway_standard>
 		</payment>
 	</default>

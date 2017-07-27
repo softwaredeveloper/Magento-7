@@ -1,7 +1,7 @@
 <?php
 
 class Cardstream_PaymentGateway_Block_HostedForm extends Mage_Payment_Block_Form {
-	protected $_template = "PaymentGateway/Hosted.phtml";
+	protected $_template = "Cardstream/Hosted.phtml";
 	protected $_instance;
     protected function _construct() {
         parent::_construct();

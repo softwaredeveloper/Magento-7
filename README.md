@@ -1,4 +1,4 @@
-**Cardstream Hosted Forms Module for Magento**
+**Cardstream Payment Gateway Module for Magento**
 
 **Compatibility**
 

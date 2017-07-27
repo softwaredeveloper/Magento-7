@@ -1,7 +1,7 @@
 <?php
 
 class Cardstream_PaymentGateway_Block_DirectForm extends Mage_Payment_Block_Form {
-    protected $_template = "PaymentGateway/Direct.phtml";
+    protected $_template = "Cardstream/Direct.phtml";
     protected $_instance;
     protected function _construct() {
         parent::_construct();
