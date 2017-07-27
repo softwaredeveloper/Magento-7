@@ -223,7 +223,7 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
 	private function getDirectDetails() {
 		$this->log('Normalizing form data');
 		$session = $this->getSessionData();
-		$required = array('cardNumber', 'cardStripCode', 'cardExpiryYear', 'cardExpiryMonth');
+		$required = array('cardNumber', 'cardCVV', 'cardExpiryYear', 'cardExpiryMonth');
 		$req = array();
 		foreach ($required as $index=>$key) {
 			if (isset($session['form'][$key])) {
@@ -649,7 +649,7 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
 		);
 		if ($this->method == 'Direct') {
 			array_push($keys, 'cardNumber');
-			array_push($keys, 'cardStripCode');
+			array_push($keys, 'cardCVV');
 			array_push($keys, 'cardExpiryYear');
 			array_push($keys, 'cardExpiryMonth');
 		}

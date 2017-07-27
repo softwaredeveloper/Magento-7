@@ -4,73 +4,27 @@
 		<?php
 			$model = $this->getMethod();
 			$model->startOrderCapture();
-			// $fields = $model->createGeneralRequest();
-			// $name = $fields['customerName'];
-			// $address = $fields['customerAddress'];
-			// $postcode = $fields['customerPostCode'];
-			// $email = $fields['customerEmail'];
-			// $phone = @$fields['customerPhone'] ?: '';
-			// unset($fields['customerName']);
-			// unset($fields['customerAddress']);
-			// unset($fields['customerPostCode']);
-			// unset($fields['customerEmail']);
-			// unset($fields['customerPhone']);
-			// foreach($fields as $key=>$value){
-			// 	echo "<li><input type='hidden' name='payment[$key]' value='$value'/></li>";
-			// }
 		?>
-		<?php
-		/*
-		<li>
-			<label for="<?php echo $_code ?>_cc_name" class="required"><em>*</em><?php echo $this->__('Cardholder Name') ?></label>
-			<div class="input-box">
-				<input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Cardholder Name')) ?>" class="input-text required-entry" id="<?php echo $_code ?>_cc_name" placeholder="Cardholder Name" name="payment[customerName]" value='<?=$name?>' />
-			</div>
-		</li>
-		<li>
-			<label for="<?php echo $_code ?>_cc_address" class="required"><em>*</em><?php echo $this->__('Cardholder Address') ?></label>
-			<div class="input-box">
-				<input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Cardholder Address')) ?>" class="input-text required-entry" id="<?php echo $_code ?>_cc_address" placeholder="Cardholder Address" name="payment[customerAddress]" value='<?=$address?>' />
-			</div>
-		</li>
-		<li>
-			<label for="<?php echo $_code ?>_cc_postcode" class="required"><em>*</em><?php echo $this->__('Cardholder PostCode') ?></label>
-			<div class="input-box">
-				<input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Cardholder PostCode')) ?>" class="input-text required-entry" id="<?php echo $_code ?>_cc_postcode" placeholder="Cardholder PostCode" name="payment[customerPostCode]" value='<?=$postcode?>' />
-			</div>
-		</li>
-		<li>
-			<label for="<?php echo $_code ?>_cc_phone" class="required"><?php echo $this->__('Cardholder Phone') ?></label>
-			<div class="input-box">
-				<input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Cardholder Phone')) ?>" class="input-text" id="<?php echo $_code ?>_cc_phone" placeholder="Cardholder Phone" name="payment[customerPhone]" value='<?=$phone?>' />
-			</div>
-		</li>
-		<li>
-			<label for="<?php echo $_code ?>_cc_email" class="required"><em>*</em><?php echo $this->__('Cardholder Email') ?></label>
-			<div class="input-box">
-				<input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Cardholder Email')) ?>" class="input-text required-entry" id="<?php echo $_code ?>_cc_email" placeholder="Cardholder Email" name="payment[customerEmail]" value='<?=$email?>' />
-			</div>
-		</li>*/?>
 	 	<li>
-			<label for="<?php echo $_code ?>_cardstream_number" class="required"><em>*</em><?php echo $this->__('Card Number') ?></label>
+			<label for="<?php echo $_code ?>_number" class="required"><em>*</em><?php echo $this->__('Card Number') ?></label>
 			<div class="input-box">
-				<input type="text" id="<?php echo $_code ?>_cardstream_number" name="payment[cardNumber]" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Card Number')) ?>" class="input-text validate-cc-number validate-cc-type required-entry" placeholder="Card Number" value="" />
+				<input type="text" id="<?php echo $_code ?>_number" name="payment[cardNumber]" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Card Number')) ?>" class="input-text validate-cc-number validate-cc-type required-entry" placeholder="Card Number" value="" />
 			</div>
 		</li>
 		<li>
-			<label class="required" for="ccsave_expiration"><em>*</em>Expiration Date</label>
+			<label class="required" for="<?php echo $_code ?>_expirymonth"><em>*</em>Expiration Date</label>
 			<div class="input-box">
 				<div class="v-fix">
-					<input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Card expiry month')) ?>" class="input-text cvv required-entry" id="cssave_expiration" name="payment[cardExpiryMonth]" placeholder="MM" maxlength="2" value="" />
+					<input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Card expiry month')) ?>" class="input-text cvv required-entry" id="<?php echo $_code ?>_expirymonth" name="payment[cardExpiryMonth]" placeholder="MM" maxlength="2" value="" />
 				</div>
-				<input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Card expiry year')) ?>" class="input-text cvv required-entry" id="<?php echo $_code ?>_cardstream_cid" name="payment[cardExpiryYear]" maxlength="2" placeholder="YY" value="" />
+				<input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Card expiry year')) ?>" class="input-text cvv required-entry" id="<?php echo $_code ?>_expiryyear" name="payment[cardExpiryYear]" maxlength="2" placeholder="YY" value="" />
 			</div>
 		</li>
 	<li>
-		<label for="<?php echo $_code ?>_cardstream_cid" class="required"><em>*</em><?php echo $this->__('Card Verification Number') ?></label>
+		<label for="<?php echo $_code ?>_cvv" class="required"><em>*</em><?php echo $this->__('Card Verification Number') ?></label>
 		<div class="input-box">
 			<div class="v-fix">
-				<input type="password" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Card Verification Number')) ?>" class="input-text cvv required-entry validate-cc-cvn" id="<?php echo $_code ?>_card_strip_code" name="payment[cardStripCode]" maxlength="4" placeholder="CVV" value="" />
+				<input type="password" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Card Verification Number')) ?>" class="input-text cvv required-entry validate-cc-cvn" id="<?php echo $_code ?>_cvv" name="payment[cardCVV]" maxlength="4" placeholder="CVV" value="" />
 			</div>
 			<a href="#" class="cvv-what-is-this"><?php echo $this->__('What is this?') ?></a>
 			<br/>
