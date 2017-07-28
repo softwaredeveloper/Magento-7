@@ -54,7 +54,7 @@ class Cardstream_PaymentGateway_OrderController extends Mage_Core_Controller_Fro
 			$this->instance->processAll($_POST);
 
 		} else {
-			$this->instance->dbg(
+			$this->instance->log(
 				sprintf(
 					'Unknown %s request using %s integration.',
 					$_SERVER['REQUEST_METHOD'],
