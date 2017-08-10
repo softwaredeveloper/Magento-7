@@ -5,7 +5,7 @@ Project Code: [GitHub Code](https://github.com/cardstream/magento-module/tree/Ma
 
 Downloadable: [Download Plugin Link](https://github.com/cardstream/magento-module/archive/Magento-2.0.zip)
 
-Version 1.9 and above
+Version 1.9
 =================================
 
 Project Code: [GitHub Code](https://github.com/cardstream/magento-module/tree/Magento-1.9)
