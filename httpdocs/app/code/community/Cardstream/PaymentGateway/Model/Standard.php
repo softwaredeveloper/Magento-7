@@ -319,7 +319,7 @@ class Cardstream_PaymentGateway_Model_Standard extends Mage_Payment_Model_Method
 					// Set order status
 					$status = Mage::getStoreConfig('payment/PaymentGateway_standard/successfulpaymentstatus');
 					if($order->getStatus() != $status) {
-						$order->setBaseTotalPaid($amount)->setTotalPaid($amount);
+						// $order->setBaseTotalPaid($amount)->setTotalPaid($amount);
 						/*
 						 * Please see /app/core/Mage/Payment/Model/Method/Cc.php assignData method
 						 */
