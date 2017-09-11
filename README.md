@@ -12,6 +12,7 @@ Project Code: [GitHub Code](https://github.com/cardstream/magento-module/tree/Ma
 
 Downloadable: [Download Plugin Link](https://github.com/cardstream/magento-module/archive/Magento-1.9.zip)
 
+# [Freelance magento developer](https://www.phpfreelanceprogrammer.com/magento-programmer.html)
 
 Version 1.8
 =================================
